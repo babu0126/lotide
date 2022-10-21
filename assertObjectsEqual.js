@@ -1,11 +1,11 @@
 const eqObjects = function(object1, object2) {
   for (const value in object1) {
-    if (object1.hasOwnProperty(value)) {
+    if (Object.prototype.hasOwnProperty.call(object1, value)) {
       if (object1[value] !== object2[value]) return false;
     }
   }
   for (const value in object2) {
-    if(object2.hasOwnProperty(value)) {
+    if (Object.prototype.hasOwnProperty.call(object2, value)) {
       if (object2[value] !== object1[value]) return false;
     }
   }
@@ -18,7 +18,7 @@ const assertObjectsEqual = function(actual, expected) {
     console.log(`✅✅✅ Assertion Passed: ${inspect(actual)} === ${inspect(expected)}`);
   } else {
     console.log(`🛑🛑🛑 Assertion Failed: ${inspect(actual)} !== ${inspect(expected)}`);
-}
+  }
 };
 // Test Cases:
 const ab = { a: "1", b: "2" };
