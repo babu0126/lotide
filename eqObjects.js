@@ -6,25 +6,24 @@ const assertEqual = function(actual, expected) {
   }
 };
 
-const eqObjects = function(object1, object2) {
-  
-  for (const value in object1) {
-    if (object1.hasOwnProperty(value)) {
-      if (object1[value] !== object2[value]) return false;
-    }
-  }
-  for (const value in object2) {
-    if(object2.hasOwnProperty(value)) {
-      if (object2[value] !== object1[value]) return false;
-    }
-  }
-  return true;
+const eqObjects = (object1, object2) => {
+  if (object1 === object2) return true;
+  if (typeof object1 !== 'object' && typeof object2 !== 'object') return object1 === object2;
+  if (object1 === null || object1 === undefined || object2 === null || object2 === undefined) return false;
+  let key1Array = Object.keys(object1);
+  if (key1Array.length !== Object.keys(object2).length) return false;
+  return key1Array.every(k => eqObjects(object1[k], object2[k]));
 };
 
-// Test Cases:
-const ab = { a: "1", b: "2" };
-const ba = { b: "2", a: "1" };
-const abc = { a: "1", b: "2", c: "3" };
 
-assertEqual(eqObjects(ab,ba),true);
-assertEqual(eqObjects(ab,abc),true);
+console.log(eqObjects({ a: { z: 1 }, b: 2 }, { a: { z: 1 }, b: 2 })); // => true
+console.log(eqObjects({ a: { y: 0, z: 1 }, b: 2 }, { a: { z: 1 }, b: 2 })); // => false
+console.log(eqObjects({ a: { y: 0, z: 1 }, b: 2 }, { a: 1, b: 2 }) );// => false
+
+// Test Cases:
+// const ab = { a: "1", b: "2" };
+// const ba = { b: "2", a: "1" };
+// const abc = { a: "1", b: "2", c: "3" };
+
+// assertEqual(eqObjects(ab,ba),true);
+// assertEqual(eqObjects(ab,abc),true);
