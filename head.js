@@ -1,5 +1,4 @@
-const head = function(array, n) {
+const head = function(array) {
   return array[0];
 }
-
 module.exports= head;
